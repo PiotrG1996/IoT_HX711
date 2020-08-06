@@ -1,0 +1,37 @@
+'use strict';
+
+module.exports = function(RED) {
+    const HX711 = require('HX711ADC');
+    
+    function hx711(config) {
+        RED.nodes.createNode(this,config);
+        var node = this;
+
+	node.dout = parseInt(config.dout);
+	node.sck  = parseInt(config.sck);
+	node.gain = parseInt(config.gain);
+	node.tare = parseInt(config.tare);
+	node.initialized = false;
+
+	// init the chip
+	node.status({fill:"grey",shape:"ring",text:"INITIALISING HX711 .."});
+	node.log("INITIALISING HX711 on BCM Pins DOUT: "+node.dout+" SCK: "+node.sck);
+	node.hx711adc = new HX711ADC(DoutPinBCM:node.dout,SckPinBCM:node.sck,GAIN:node.gain);
+	node.hx711adc.init().then( function(ID){
+	    node.initialized = true;
+	    node.status({fill:"green",shape:"dot",text:node.type+" ready"});
+	    node.log("HX711 on BCM Pins DOUT: "+node.dout+" SCK: "+node.sck+" initialized ...");
+	}).catch(function(err){
+	    node.status({fill:"red",shape:"ring",text: "HX711 init failed !"});
+	    node.error("HX711 init failed ->" + err);
+	});
+	// trigger read
+        node.on('input', function(msg) {
+            msg.payload = node.hx711adc.singleRead();
+	    node.debug("hx711: (dout:"+node.dout+",sck: "+node.sck+"): "+msg.payload);
+            node.send(msg);
+	    return null;
+        });
+    }
+    RED.nodes.registerType("hx711",hx711);
+}

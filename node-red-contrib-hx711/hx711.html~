@@ -1,0 +1,27 @@
+<script type="text/javascript">
+  RED.nodes.registerType('hx711',{
+      category: 'input',
+      color: '#a6bbcf',
+      defaults: {
+             name: {value: ""}
+      },
+      inputs: 1,
+      outputs: 1,
+      label: function(){
+         return this.name||"hx711";
+      }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="hx711">
+     <div class="form-row">
+       <label for="node-input-name"><i class="icon-tag"></i> Name </label>
+       <input type="text" id="node-input-name" placeholder="Name">
+     </div>
+     
+</script>
+
+<script type="text/x-red" data-help-name="hx711">
+  <p>A simple node that reads data from the HX711 ADC converter</p>
+  <p>Input A: gain 128 and Gain 64, Input B: gain 32. Select pins for dout and sck to connect for bit-banging interface. Andre Kaufmann 12/2018 MIT Licence </p>
+</script>

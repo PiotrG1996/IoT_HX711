@@ -1,0 +1,11 @@
+module.exports = function(RED) {
+    function hx711Node(config){
+	RED.nodes.createNode(this,config);
+	var node = this;
+	node.on('input',function(msg){
+	    msg.payload = "Hello hx711";
+	    node.send(msg);
+	});
+    }
+    RED.nodes.registerType("hx711",hx711Node);
+}

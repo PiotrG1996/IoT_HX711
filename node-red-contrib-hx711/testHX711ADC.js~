@@ -1,0 +1,8 @@
+'use strict';
+var dout = 5;
+var sck  = 6;
+var gain = 128;
+
+var hx711adc = new HX711ADC(DoutPinBCM:dout,SckPinBCM:sck,GAIN:gain);
+
+console.log(hx711adc.singleRead());

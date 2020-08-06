@@ -1,0 +1,53 @@
+<script type="text/javascript">
+  RED.nodes.registerType('hx711',{
+      category: 'input',
+      color: '#a6bbcf',
+      defaults: {
+               name: {value: "",required: false},
+               dout: {value:5,required: true, validate: RED.validators.number()},
+               sck:  {value:6,required: true, validate: RED.validators.number()},
+               gain: {value:128,required: true, validate: RED.validators.number()},
+               tare: {value:0.0,required: false, validate: RED.validators.number()}
+      },
+      inputs: 1,
+      outputs: 1,
+      label: function(){
+         return this.name||"hx711";
+      },
+      outputLabels: ["Sensor reads"],
+      inputLabels: ["Trigger"]
+  });
+</script>
+
+<script type="text/x-red" data-template-name="hx711">
+  
+     <div class="form-row">
+       <label for="node-input-name"><i class="icon-tag"></i> Name </label>
+       <input type="text" id="node-input-name" placeholder="Name">
+     </div>
+     
+     <div class="form-row">
+       <label for="node-input-dout"><i class="fa fa-tag"></i> dout</label>
+       <input type="number" id="node-input-dout" />
+     </div>
+
+     <div class="form-row">
+        <label for="node-input-sck"><i class="fa fa-tag"></i> sck</label>
+        <input type="number" id="node-input-sck" />
+      </div>
+    
+      <div class="form-row">
+        <label for="node-input-gain"><i class="fa fa-tag"></i> gain </label>
+        <input type="number" id="node-input-gain">
+      </div>
+    
+      <div class="form-row">
+        <label for="node-input-tare"><i class="fa fa-tag"></i> tare </label>
+        <input type="number" id="node-input-tare">
+      </div>    
+</script>
+
+<script type="text/x-red" data-help-name="hx711">
+  <p>A simple node that reads data from the HX711 ADC converter</p>
+  <p>Input A: gain 128 and Gain 64, Input B: gain 32. Select pins for dout and sck to connect for bit-banging interface. Andre Kaufmann 12/2018 MIT Licence dout </p>
+</script>
