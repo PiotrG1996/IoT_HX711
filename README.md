@@ -38,6 +38,7 @@ graphical user interface in a web application is presented in the end o readme.
 <p align="center">
 Figure 1. HX711 sensor
 </p>
+</br>
                         
 
 | PIN |             DESCRIPTION             |
@@ -64,8 +65,11 @@ A mechanical case presented above protect this sensor against damage and provide
 <p align="center">
 Figure 2. Mechanical cover part with lever
 </p>
+</br>
 
 Raspberry Pi is a miniaturized computer, works as an embedded system and is applied to execute program in Node-Red. Special attached I/O expansion hat enables to read data from the sensor in a real time. 
+
+</br>
 
 ## Definition of GPIOs:
 
@@ -129,9 +133,9 @@ ConvertToForce contains complete function to get current time, calculate force a
 moment of a force. The message is send in an object of the following structure:
 ```json
 {
-"time": "20:55:59", // get current time
-"MyForce": 0.05, // value of a force
-"Moment": 0.25 // value of a moment
+"time": "20:55:59", 
+"MyForce": 0.05, 
+"Moment": 0.25
 }
 ```
 <p align="center">
