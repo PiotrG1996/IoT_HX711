@@ -18,7 +18,9 @@
     }
   },
   "author": {
-    "name": "Andre Kaufmann"
+    "name": "Andre Kaufmann",
+    "name": "Piotr Gapski"
+
   },
   "license": "MIT",
   "readme": "# node-red-contrib-hx711\n\nA node-red custom node wrapper for the nodejs HX711 ADC package. It was tested using a Pi 3 and might work on other platforms with node-RED. The package provides a single custom node __hx711__ that can be used directly in your flow.\n\n## Installation\n\nUnder your node-red (typically ``$HOME/.node-red``) working directory.\n\n``\nnpm install node-red-contrib-hx711\n``\n\nNode palette can be used as well to install the node.\n\nAfter restarting node-red the \"hx711\" node should be available in \"input\" category.\n\n## Prerequisites\n\nWire your ADCs DOUT and SCK with free pins on your pi. Only four wires are needed. Two for power (VCC & GND) and two for bit-banging. The numbering follows the BCM numbering of the pins.\n\n\n## Usage\n\n### Configuration & deployment\nAfter installation place your hx771 node in any of your flow and configure the following parameters:\n\n1. __Name:__ Select the name of your node for easy identification.\n2. __dout:__ Select the DOUT pin (BCM) on your Pi.\n3. __sck:__  Select the SCK pin (BCM) on your Pi.\n4. __gain:__ Select signal amplification gain, 128 and 64 uses port A of the chip, 32 uses port B\n4. __tare:__ Select offset value for tare (optional).\n\n\n### Reading Sensor Data\nAs in other node-red nodes the actual measurement of hx711 data require that an input msg arrive to the node. The input called __Trigger__ will start the reading of the hx711 data will send the data in the node's output. \n\nThe __output__ will have the following format:\n\n```\nmsg = {\n  _msgid: <node-red msg_id>,\n  payload: {\n  \t   value of hx711 ADC \n  }\n}\n\n```\n\n## Notes\n\nThis node has been tested on Raspberry Pi 3, running recent versions of node-red.\n\nhx711 has been tested using different breakout from cheap providers. Original Adafruit's sensor is not required.\n\n## Change log\n\n* 0.0.1 First version\n",
