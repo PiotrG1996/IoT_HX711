@@ -112,9 +112,9 @@ ConvertToForce contains complete function to get current time, calculate force a
 moment of a force. The message is send in an object of the following structure:
 ```json
 {
-"time": "20:55:59", // get current time
-"MyForce": 0.05, // value of a force
-"Moment": 0.25 // value of a moment
+"time": "20:55:59", 
+"MyForce": 0.05,
+"Moment": 0.25
 }
 ```
 <p align="center">
