@@ -19,8 +19,6 @@ graphical user interface in a web application is presented in the end o readme.
 * Implement graphical interface in Node-RED
 * Documentation
 
-
-
 ## Sensor specification:
 * Supply voltage: 2.6 V to 5.5 V
 * Number of channels: 2
@@ -30,34 +28,41 @@ graphical user interface in a web application is presented in the end o readme.
 * Pins: openings for goldpin connectors - 2.54 mm 
 * Operating temperature: -20 °C to 85 °C
 * Module dimensions: 33 x 20 mm
-
-
-                        | PIN |                            DESCRIPTION |
-                        | --- | -------------------------------------: |
-                        | VCC |       Supply voltage from 2.6V to 5.5V |
-                        | DAT |     Data line of the communication bus |
-                        | CLK |    Clock line of the communication bus |
-                        | GND |               The ground of the system |
-                        | E + |                                        |
-                        | E - |                                        |
-                        | A - |                                        |
-                        | A + | Lines to connect the strain-gauge beam |
-                        | B - |                                        |
-                        | B + |                                        |
-
-
+  
+</br>
 
 <p align="center">
   <img width="460" height="300" src="img/module.png">
 </p>
 
 <p align="center">
-  <img width="460" height="300" src="img/lever.png">
+Figure 1. HX711 sensor
 </p>
+                        
+
+| PIN |             DESCRIPTION             |
+| --- | :---------------------------------: |
+| VCC |  Supply voltage from 2.6V to 5.5V   |
+| DAT | Data line of the communication bus  |
+| CLK | Clock line of the communication bus |
+| GND |      The ground of the system       |
+| E+  |                                     |
+| E-  |                                     |
+| A-  |          Lines to connect           |
+| A+  |        the strain-gauge beam        |
+| B-  |                                     |
+| B+  |                                     |
+
+
+
+
 A mechanical case presented above protect this sensor against damage and provides a lever to measure a force and a moment of force. There are six sensor connected to the expansion hat. This half-bridge load cell can measure up to 50kg depending on a tensometric beam.
 
 <p align="center">
-  <img width="560" height="400" src="img/rpi.png">
+  <img width="660" height="300" src="img/lever.png">
+</p>
+<p align="center">
+Figure 2. Mechanical cover part with lever
 </p>
 
 Raspberry Pi is a miniaturized computer, works as an embedded system and is applied to execute program in Node-Red. Special attached I/O expansion hat enables to read data from the sensor in a real time. 
@@ -67,12 +72,18 @@ Raspberry Pi is a miniaturized computer, works as an embedded system and is appl
 <p align="center">
   <img width="860" height="400" src="img/GPIO.png">
 </p>
+<p align="center">
+Figure 3. Raspberry Pi GPIO
+</p>
+</br>
 
 1. __Name:__ 	- select the name of your node for easy identification.
 2. __dout:__ - select the DOUT pin (BCM) on your Pi.
 3. __sck:__  - select the SCK pin (BCM) on your Pi.
 4. __gain:__ - select signal amplification gain, 128 and 64 uses port A of the chip, 32 uses port B
 5. __tare:__ - select offset value for tare (optional).
+
+</br>
 
 Recording to the difference between RPi pins order and Node-RED, in selected input “hx711”, all properties were changed and assigned to the following  BCM numbers:
 
@@ -85,11 +96,17 @@ Recording to the difference between RPi pins order and Node-RED, in selected inp
 | 5      |  13   |    6 |
 | 6      |  26   |   19 |
 
+</br>
+
 ## Force calibration
 
 <p align="center">
   <img  src="img/results.png">
 </p>
+<p align="center">
+Figure 4. Calibration results
+</p>
+</br>
 
 To achieve the correct calibration of all sensors, four measurements were done with the following weights: 20g, 50g, 100g, 200g and one without. Based on the results of signal values, the graph with the table was created. All average values from individual sensor were insert into the formula shown beneath. Every linearized function was calculated by the following mathematical formula:
 The linearized function (1) represents an equation of a straight defined by a calibrated sensor. At the moment variables a and b are unknown.
@@ -112,9 +129,9 @@ ConvertToForce contains complete function to get current time, calculate force a
 moment of a force. The message is send in an object of the following structure:
 ```json
 {
-"time": "20:55:59", 
-"MyForce": 0.05,
-"Moment": 0.25
+"time": "20:55:59", // get current time
+"MyForce": 0.05, // value of a force
+"Moment": 0.25 // value of a moment
 }
 ```
 <p align="center">
@@ -123,6 +140,8 @@ moment of a force. The message is send in an object of the following structure:
 JSON ( JavaScript Object Notation) is a standard way for representing a JavaScript
 object as a String. It is commonly used by web APIs to return data. The main idea
 of JSON format is to represent and store data that is easily readable.
+
+</br>
 
 <p align="center">
   <img width="200" height="100" src="img/fileblock.png">
@@ -140,6 +159,10 @@ The path must be changed.
 <p align="center">
   <img width="500" height="250" src="img/file_example.png">
 </p>
+<p align="center">
+Figure 5. Example of file appending
+</p>
+</br>
 
 <p align="center">
   <img width="300" height="100" src="img/debugblock.png">
@@ -151,6 +174,10 @@ properly. An example of use is shown below.
 <p align="center">
   <img width="400" height="300" src="img/example_debug.png">
 </p>
+<p align="center">
+Figure 6. Example of the object usage
+</p>
+</br>
 
 <p align="center">
   <img width="300" height="120" src="img/buttonblock.png">
@@ -221,19 +248,24 @@ var myforce = msg.payload.Force;
 msg.payload = myforce;
 return msg;
 ```
+</br></br></br>
+
+
 
 ## Moment of a force
 
-IMG
 
 The moment of a force is the tendency of some forces to cause rotation. In this
 project rotating propeller causes change of a moment whenever direction of a
 screw is changed. A schematic idea of sensors position is presented below. The
 distance between two points must be defined in the node <b><i>ConvertTheForce</b></i> as well
-as an angle of force depending on a angle position of a screw. (It is represented as
-X in the image)
-
+as an angle of force depending on a angle position of a screw.
 The moment of a force is calculated according to the following equation:
+
+ <p align="center">
+  <img width="500" height="150" src="img/equation.png">
+</p>
+</br>
 
 # Graphical User Interface
 
@@ -259,6 +291,10 @@ A gauge widget is shown below.
 <p align="center">
   <img width="800" height="250" src="img/UI.png">
 </p>
+<p align="center">
+Figure 7. Fragment of user interface - gauge widget
+</p>
+</br>
 
 There are two different types of guage to separate shown in live time values of a
 force and the moment of a force. The value is send every second and shown above
@@ -267,6 +303,7 @@ the label with defined unit.
 <p align="center">
   <img width="350" height="120" src="img/gaugeblock.png">
 </p>
+
 
 This chart plots the input values on a diagram. In this case all values from sensor
 appear on a linear chart. Axes with time and the range of value can be changed as
@@ -280,6 +317,10 @@ diagram view. There is an image of overviewed charts below.
 <p align="center">
   <img width="800" height="1000" src="img/graph.png">
 </p>
+<p align="center">
+Figure 8. Fragment of user interface - live graph
+</p>
+</br>
 
 Node-RED makes it easy to save, share and move flows between computers using
 the export and import feature. Flows are exported as a JSON file and imported from
@@ -291,6 +332,10 @@ The result of this flow is presented below.
 <p align="center">
   <img width="800" height="800" src="img/flow.png">
 </p>
+<p align="center">
+Figure 9. Complete flow saved as <i>flows.json</i>
+</p>
+</br>
 
 There is also a possibility to set up RaspberryPi as an access point and run Node-
 RED on reboot. This is essential to run a program on Raspberry automatically.
