@@ -341,10 +341,131 @@ Figure 9. Complete flow saved as <i>flows.json</i>
 </p>
 </br>
 
+# Raspberry Pi configuration
+
 There is also a possibility to set up RaspberryPi as an access point and run Node-
 RED on reboot. This is essential to run a program on Raspberry automatically.
 
+## Step 1: Install and update Raspbian
 
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
+## Step 2: Install hostapd and dnsmasq
+```
+sudo apt-get install hostapd
+sudo apt-get install dnsmasq
+```
+Stop running the program while setting the configuration:
+```
+sudo systemctl stop hostapd
+sudo systemctl stop dnsmasq
+```
+
+## Step 3: Configure a static IP for the wlan0 interface
+```
+sudo nano /etc/dhcpcd.conf
+```
+ Add lines at the end of the file:
+```
+interface wlan0
+static ip_address=192.168.0.10/24
+denyinterfaces eth0
+denyinterfaces wlan0
+```
+
+## Step 4: Configure the DHCP server (dnsmasq)
+```
+sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+sudo nano /etc/dnsmasq.conf
+```
+ Type lines into the file:
+ ```
+interface=wlan0
+dhcp-range=192.168.0.11,192.168.0.30,255.255.255.0,24h
+```
+
+# Step 5: Configure the access point host software (hostapd)
+```
+sudo nano /etc/hostapd/hostapd.conf
+```
+ Define wireless configuration and change SSID with password:
+ ```
+interface=wlan0
+bridge=br0
+hw_mode=g
+channel=7
+wmm_enabled=0
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+ssid=NETWORK
+wpa_passphrase=PASSWORD
+```
+Show the system the location of the configuration file:
+```
+sudo nano /etc/default/hostapd
+```
+Add this line at the end of the file:
+```
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
+```
+
+# Step 6: Set up traffic forwarding
+```
+sudo nano /etc/sysctl.conf
+```
+delete # symbol from #net.ipv4.ip_forward=1
+
+# Step 7: Add a new iptables rule
+```
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+```
+To run the configuration on boot edit /etc/rc.local and add the following line just above the line exit 0:
+```
+iptables-restore < /etc/iptables.ipv4.nat
+```
+It is possible to execute Node-RED command as well:
+1. Create a python file (extension .py) with the following code:
+```
+import os
+os.system('node-red-start')
+```
+Don’t forget to make it executable: chmod +x <fileName>
+2. Add line to /etc/rc.loca before exit 0:
+```
+sudo python /home/pi/sample.sh &
+```
+# Step 8: Enable internet connection
+```
+sudo apt-get install bridge-utils
+```
+Add new bridge:
+```
+sudo brctl addbr br0
+sudo brctl addif br0 eth0
+```
+Edit interface:
+```
+sudo nano /etc/network/interfaces
+```
+ Add following lines:
+ ```
+auto br0
+iface br0 inet manual
+bridge_ports eth0 wlan0
+```
+
+# Step 9: Reboot
+```
+sudo reboot
+```
 ## Conclusions
 
 Node-RED is a very useful tool for integrating IoT devices in applications such as home
