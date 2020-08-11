@@ -15,7 +15,7 @@ graphical user interface in a web application is presented in the end o readme.
 
 * Define GPIO ( onoff node module is required)
 * Calibrate raw data from sensors
-* Compute for all sensors: a force and a moment of a force
+* Calculate for all sensors: force and moment of a force
 * Implement graphical interface in Node-RED
 * Documentation
 
