@@ -1,15 +1,15 @@
 # Introduction
 
-This project contains a web application based on Node-Red to measure force and tourqe using HX711 sensor. Special hardware attached on top of Raspberry Pi enables proper signal communication betweeen HX711 and RPI. There are 2 possibilities of communication:
+This project contains a web application based on Node-Red to measure force and tourqe using HX711 sensor. Special hardware attached on the top of Raspberry Pi enables proper signal communication betweeen HX711 and RPI. There are 2 possibilities of communication:
 
 1. SSH protocol (without graphical user interface)
 2. VNC connection (with graphical user interface)
 
-At the end of the project, Raspberry Pi should work as individual access point and execute Node-RED on boot. Description of this step is shown further in the project. Finally this project provides full measurement of a force and a moment of a force storing all measured data in the files.
+At the end of the project, Raspberry Pi should work as an individual access point and execute Node-RED on boot. The description of this step is shown further in the project. Finally, this project provides a full measurement of a force and a moment of a force storing all measured data in the files.
 
-This project contains general description of mechanical parts, GPIO definition and a
-scheme presenting step by step how to calibrate individual forces. Full explanation of basic calculus and necessary blocks in Node-RED is provided as well. Short code overview and designed
-graphical user interface in a web application is presented in the end o readme.
+This project contains a general description of mechanical parts, GPIO definition, and a
+scheme presenting step by step how to calibrate individual forces. A full explanation of basic calculus and necessary blocks in Node-RED is provided as well. A Shortcode overview and designed
+graphical user interface in a web application is presented at the end o readme.
 
 ## Project guidelines:
 
@@ -57,7 +57,7 @@ Figure 1. HX711 sensor
 
 
 
-A mechanical case presented above protect this sensor against damage and provides a lever to measure a force and a moment of force. There are six sensor connected to the expansion hat. This half-bridge load cell can measure up to 50kg depending on a tensometric beam.
+A mechanical case presented above protects this sensor against damage and provides a lever to measure a force and a moment of force. There are six sensors connected to the expansion hat. This half-bridge load cell can measure up to 50kg depending on a tensometric beam.
 
 <p align="center">
   <img width="660" height="300" src="img/lever.png">
@@ -67,7 +67,7 @@ Figure 2. Mechanical cover part with lever
 </p>
 </br>
 
-Raspberry Pi is a miniaturized computer, works as an embedded system and is applied to execute program in Node-Red. Special attached I/O expansion hat enables to read data from the sensor in a real time. 
+Raspberry Pi is a miniaturized computer, works as an embedded system and is applied to execute programs in Node-Red. Special attached I/O expansion hat enables to read data from the sensor in real-time. 
 
 </br>
 
@@ -112,8 +112,8 @@ Figure 4. Calibration results
 </p>
 </br>
 
-To achieve the correct calibration of all sensors, four measurements were done with the following weights: 20g, 50g, 100g, 200g and one without. Based on the results of signal values, the graph with the table was created. All average values from individual sensor were insert into the formula shown beneath. Every linearized function was calculated by the following mathematical formula:
-The linearized function (1) represents an equation of a straight defined by a calibrated sensor. At the moment variables a and b are unknown.
+To achieve the correct calibration of all sensors, four measurements were done with the following weights: 20g, 50g, 100g, 200g, and one without. Based on the results of signal values, the graph with the table was created. All average values from the individual sensors inserted into the formula shown beneath. Every linearized function was calculated by the following mathematical formula:
+The linearized function (1) represents an equation of a straight defined by a calibrated sensor. At the moment variables, a and b are unknown.
 
 <p align="center">
   <img width="560" height="600" src="img/calculations.png">
@@ -127,10 +127,10 @@ called <b><i>ConvertToForce</i></b>.
   <img width="300" height="100" src="img/functionblock.png">
 </p>
 
-A JavaScript function block allows to write a code in javascript programming
+A JavaScript function block allows writing a code in a javascript programming
 language. A JavaScript object is kept in a message called msg. A node called
-ConvertToForce contains complete function to get current time, calculate force and
-moment of a force. The message is send in an object of the following structure:
+ConvertToForce contains a complete function to get the current time, calculate force, and
+moment of a force. The message is sent in an object of the following structure:
 ```json
 {
 "time": "20:55:59", 
@@ -141,9 +141,9 @@ moment of a force. The message is send in an object of the following structure:
 <p align="center">
   <img width="300" height="100" src="img/jsonblock.png">
 </p>
-JSON ( JavaScript Object Notation) is a standard way for representing a JavaScript
+JSON ( JavaScript Object Notation) is a standard way of representing a JavaScript
 object as a String. It is commonly used by web APIs to return data. The main idea
-of JSON format is to represent and store data that is easily readable.
+of the JSON format is to represent and store data that is easily readable.
 
 </br>
 
@@ -152,13 +152,13 @@ of JSON format is to represent and store data that is easily readable.
 </p>
 
 This block is responsible for saving all <b><i>msg.payload</i></b> into the specified file path.
-Filename should include the full path to the folder in which all data is stored. If file doesn’t exist, then will be automatically created:
+The filename should include the full path to the folder in which all data is stored. If the file doesn’t exist, then will be automatically created:
 ```bash
 /<path>/.node-red/node_modules/node-red-contrib-hx711/Data/Sensor_I.log
 ```
 The path must be changed.
 
-### Example of application in the Node-RED flow:
+### Example of the application in the Node-RED flow:
 
 <p align="center">
   <img width="500" height="250" src="img/file_example.png">
@@ -258,12 +258,10 @@ return msg;
 
 ## Moment of a force
 
-
 The moment of a force is the tendency of some forces to cause rotation. In this
-project rotating propeller causes change of a moment whenever direction of a
-screw is changed. A schematic idea of sensors position is presented below. The
+project rotating propeller causes a change of a moment whenever the direction of the screw is changed. A schematic idea of the sensors' position is presented below. The
 distance between two points must be defined in the node <b><i>ConvertTheForce</b></i> as well
-as an angle of force depending on a angle position of a screw.
+as an angle of force depending on an angular position of a screw.
 The moment of a force is calculated according to the following equation:
 
  <p align="center">
@@ -273,8 +271,8 @@ The moment of a force is calculated according to the following equation:
 
 # Graphical User Interface
 
-The GUI is presented in a form of web application that runs as a client (in a browser),
-connection is provided by WiFi from RaspberryPi that work as an access point.
+The GUI is presented in a form of a web application that runs as a client (in a browser),
+the connection is provided by WiFi from RaspberryPi that works as an access point.
 
 <p align="center">
   <img width="300" height="100" src="img/moment.png">
@@ -301,20 +299,19 @@ Figure 7. Fragment of user interface - gauge widget
 </br>
 
 There are two different types of guage to separate shown in live time values of a
-force and the moment of a force. The value is send every second and shown above
-the label with defined unit.
+force and the moment of a force. The value is sent every second and shown above
+the label with a defined unit.
 
 <p align="center">
   <img width="350" height="120" src="img/gaugeblock.png">
 </p>
 
 
-This chart plots the input values on a diagram. In this case all values from sensor
-appear on a linear chart. Axes with time and the range of value can be changed as
+This chart plots the input values on a diagram. In this case, all values from the sensor appear on a linear chart. Axes with time and the range of value can be changed as
 well. This can be either a bar or pie chart. Each input msg.payload value is converted
 to a number. If the conversion fails, the message is ignored. More information
-about chart properties are well described in a node help section. A button under
-both charts is used to delete all data from saved files. It doesn’t affect live time
+about chart properties is well described in a node help section. A button under
+both charts is used to delete all data from saved files. It doesn’t affect the live time
 diagram view. There is an image of overviewed charts below.
 
 
